@@ -1,27 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <h2>App</h2>
+  <p>msg: {{ msg }}</p>
+  <button @click="fn('--')">更新</button>
+
+  <child :msg="msg" msg2="cba" @fn="fn" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { ref } from 'vue'
+import child from './components/child.vue'
 
-export default defineComponent({
-  name: 'App',
+export default {
   components: {
-    HelloWorld
-  }
-});
-</script>
+    child
+  },
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  setup() {
+    const msg = ref('abc')
+
+    function fn(content: string) {
+      msg.value += content
+    }
+    return {
+      msg,
+      fn
+    }
+  }
 }
-</style>
+</script>
